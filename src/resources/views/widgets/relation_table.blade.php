@@ -24,12 +24,19 @@
     }
     if(!isset($widget['columns'])){
         $widget['columns'] = [];
-        foreach ($entry->{$widget['name']}->getFillable() as $propertyName){
-            $widget['columns'][] = [
-                'label' => $crud->makeLabel($propertyName),
-                'name' => $propertyName,
-            ];
-        }
+
+        try {
+            $model = get_class($entry->{$widget['name']}()->getRelated());
+            $model = new $model();
+
+            $widget['columns'] = [];
+            foreach ($model->getFillable() as $property){
+                $widget['columns'][] = [
+                    'label' => $crud->makeLabel($property),
+                    'name'  => $property,
+                ];
+            }
+        } catch (Exception $e){}
     }
     if(!isset($widget['columns']) && !isset($widget['model'])){
         $widget['columns'] = [];
@@ -49,8 +56,8 @@
     >
         <thead>
             <tr role="row">
-                @foreach($widget['columns'] as $propertyName => $propertyLabel)
-                    <th>{{$propertyLabel}}</th>
+                @foreach($widget['columns'] as $column)
+                    <th>{{$column['label']}}</th>
                 @endforeach
                 @if($widget['buttons'] === true)
                     <th>{{ trans('backpack::crud.actions') }}</th>
@@ -60,9 +67,18 @@
         <tbody>
             @foreach($entry->{$widget['name']} as $model)
                 <tr role="row">
-                    @foreach($widget['columns'] as $propertyName => $propertyLabel)
+                    @foreach($widget['columns'] as $column)
+                        @php
+                            $value = '';
+                            if(isset($column['closure'])){
+                                $value = $column['closure']($model);
+                            }
+                            if(isset($column['name'])){
+                                 $value = data_get($model, $column['name']);
+                            }
+                        @endphp
                         <td>
-                            <span>{{data_get($model, $propertyName)}}</span>
+                            <span>{{$value}}</span>
                         </td>
                     @endforeach
                     @if($widget['buttons'] === true)
@@ -93,8 +109,8 @@
         </tbody>
         <tfoot>
             <tr>
-                @foreach($widget['columns'] as $propertyName => $propertyLabel)
-                    <th>{{$propertyLabel}}</th>
+                @foreach($widget['columns'] as $column)
+                    <th>{{$column['label']}}</th>
                 @endforeach
                 @if($widget['buttons'] === true)
                     <th rowspan="1" colspan="1">{{ trans('backpack::crud.actions') }}</th>
