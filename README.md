@@ -1,5 +1,9 @@
 ## Laravel Backpack Relations Views
-
+1. [Installation](#installation)
+2. [Screenshots](#screenshots)
+3. [Features](#features)
+4. [Documentation](#documentation)
+5. [Usage](#usage)
 
 ### Installation
 ```
@@ -17,7 +21,7 @@ composer require izica/laravel-backpack-relations-views
 * build field value by closure
 * use dot orm notation for accessing relation fields
 
-### Docs for widgets
+### Documentation
 * relation_panel
     * `name` - name of relation
     * `label` - panel label
@@ -104,8 +108,9 @@ protected function setupShowOperation()
         'visible' => function($entry){
             return $entry->order_cargos->count() > 0;
         },
-        'buttons' => false,
-        'fields'        => [
+        'button_add' => false,
+        'button_delete' => false,
+        'columns' => [
             [
                 'label' => 'Birthdate',
                 'closure' => function($entry){
