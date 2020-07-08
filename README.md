@@ -104,7 +104,7 @@ protected function setupShowOperation()
         'type'           => 'relation_table',
         'name'           => 'order_cargos',
         'label'          => 'Order cargo list',
-        'backpack_crud'  => 'accountcontact',
+        'backpack_crud'  => 'ordercargo',
         'visible' => function($entry){
             return $entry->order_cargos->count() > 0;
         },
@@ -112,25 +112,18 @@ protected function setupShowOperation()
         'button_delete' => false,
         'columns' => [
             [
-                'label' => 'Birthdate',
+                'label' => 'Type',
+                'name'  => 'order_cargo_type.name',
+            ],
+            [
+                'label' => 'Weight',
+                'name'  => 'weight',
+            ],
+            [
+                'label' => 'Value, $',
                 'closure' => function($entry){
-                    return date('d.M.Y', $entry->birthdate);
+                    return "{$entry->value}$";
                 }
-            ],
-            [
-                'label' => 'Contact phone',
-                'name'  => 'contact_phone',
-            ],
-            [
-                'label' => 'Contact email',
-                'name'  => 'contact_email',
-            ],
-            [
-                'label' => 'Address',
-                'name'  => 'address.name',
-                'visible' => function($entry){
-                    return !!$entry->address;
-                }       
             ],
         ],
     ];
