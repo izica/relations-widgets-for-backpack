@@ -1,6 +1,6 @@
 {
     "name": "izica/laravel-backpack-relations-views",
-    "description": "Views/widgets for preview laravel relations",
+    "description": "Views/widgets for preview laravel relations in laravel backpack",
     "license": "MIT",
     "authors": [
         {
