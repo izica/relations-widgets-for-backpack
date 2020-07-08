@@ -1,15 +1,15 @@
 {
-    "name": "izica/laravel-backpack-relations-views",
-    "description": "Views/widgets for preview laravel relations in laravel backpack",
+    "name": "izica/laravel-backpack-relations-widgets",
+    "description": "Widgets for preview laravel relations in laravel backpack",
     "license": "MIT",
     "authors": [
         {
             "name": "Artyom Golovarchuk",
             "email": "artemiztomska@gmail.com",
-            "homepage": "https://github.com/izica/laravel-backpack-relations-views"
+            "homepage": "https://github.com/izica/laravel-backpack-relations-widgets"
         }
     ],
-    "homepage": "https://github.com/izica/laravel-backpack-relations-views",
+    "homepage": "https://github.com/izica/laravel-backpack-relations-widgets",
     "keywords": [
         "Laravel",
         "Backpack",
@@ -27,13 +27,13 @@
     },
     "autoload": {
         "psr-4": {
-            "izica\\LaravelBackpackRelationViews\\": "src/"
+            "izica\\LaravelBackpackRelationsWidjets\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "izica\\LaravelBackpackRelationViews\\RelationViewsServiceProvider"
+                "izica\\LaravelBackpackRelationsWidjets\\RelationsWidjetsServiceProvider"
             ]
         }
     }
