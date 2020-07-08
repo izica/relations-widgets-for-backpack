@@ -7,9 +7,9 @@
             return;
         }
     }
-    if(!isset($widget['columns'])){
+    if(!isset($widget['fields'])){
         foreach ($entry->{$widget['name']}->getFillable() as $propertyName){
-            $widget['columns'][$propertyName] = $crud->makeLabel($propertyName);
+            $widget['fields'][$propertyName] = $crud->makeLabel($propertyName);
         }
     }
 
@@ -32,24 +32,24 @@
         <div class="card no-padding no-border">
             <table class="table table-striped mb-0">
                 <tbody>
-                    @foreach($widget['columns'] as $column)
+                    @foreach($widget['fields'] as $field)
                         @php
-                            if(isset($column['visible']) && is_callable($column['visible'])){
-                                if(!$column['visible']($entry->{$widget['name']}->{$widget['name']})){
+                            if(isset($field['visible']) && is_callable($field['visible'])){
+                                if(!$field['visible']($entry->{$widget['name']}->{$widget['name']})){
                                     continue;
                                 }
                             }
                             $value = '';
-                            if(isset($column['closure'])){
-                                $value = $column['closure']($entry->{$widget['name']});
+                            if(isset($field['closure'])){
+                                $value = $field['closure']($entry->{$widget['name']});
                             }
-                            if(isset($column['name'])){
-                                 $value = data_get($entry->{$widget['name']}, $column['name']);
+                            if(isset($field['name'])){
+                                 $value = data_get($entry->{$widget['name']}, $field['name']);
                             }
                         @endphp
                         <tr>
                             <td>
-                                <strong>{{$column['label'] ?? ''}}:</strong>
+                                <strong>{{$field['label'] ?? ''}}:</strong>
                             </td>
                             <td>
                                 <span>{{$value ?? ''}}</span>
@@ -65,7 +65,7 @@
                                 @if ($widget['button_show'] === true)
                                     <a href="/admin/{{$widget['backpack_crud']}}/{{$entry->{$widget['name']}->id}}/show"
                                        class="btn btn-sm btn-link">
-                                        <i class="la la-edit"></i> {{ trans('backpack::crud.preview') }}
+                                        <i class="la la-eye"></i> {{ trans('backpack::crud.preview') }}
                                     </a>
                                 @endif
                                 @if ($widget['button_edit'] === true)

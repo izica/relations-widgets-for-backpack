@@ -7,6 +7,9 @@
             return;
         }
     }
+    if (!isset($widget['buttons']) || $widget['buttons'] !== false) {
+        $widget['buttons'] = true;
+    }
     if (!isset($widget['button_add']) || $widget['button_add'] !== false) {
         $widget['button_add'] = true;
     }
@@ -46,7 +49,7 @@
                 @foreach($widget['columns'] as $propertyName => $propertyLabel)
                     <th>{{$propertyLabel}}</th>
                 @endforeach
-                @if($widget['button_edit'] === true || $widget['button_delete'] === true)
+                @if($widget['buttons'] === true)
                     <th>{{ trans('backpack::crud.actions') }}</th>
                 @endif
             </tr>
@@ -59,7 +62,7 @@
                             <span>{{data_get($model, $propertyName)}}</span>
                         </td>
                     @endforeach
-                    @if($widget['button_edit'] === true || $widget['button_delete'] === true)
+                    @if($widget['buttons'] === true)
                         <td>
                             @if ($widget['button_show'] === true)
                                 <a href="/admin/{{$widget['backpack_crud']}}/{{$model->id}}/show"
@@ -90,7 +93,7 @@
                 @foreach($widget['columns'] as $propertyName => $propertyLabel)
                     <th>{{$propertyLabel}}</th>
                 @endforeach
-                @if($widget['button_edit'] === true || $widget['button_delete'] === true)
+                @if($widget['buttons'] === true)
                     <th rowspan="1" colspan="1">{{ trans('backpack::crud.actions') }}</th>
                 @endif
             </tr>
