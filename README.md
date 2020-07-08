@@ -30,7 +30,7 @@ composer require izica/laravel-backpack-relations-widgets
     * `button_show` (optional) - set false to hide
     * `button_edit` (optional) - set false to hide
     * `visible` (optional) - closure for hiding or showing panel
-    * `fields` - fields array,
+    * `fields` (optional) - fields array, by default get columns from `fillable` in model
         * `name` - name
         * `label` - for field
         * `closure` - use closure instead of name field,
@@ -46,7 +46,7 @@ composer require izica/laravel-backpack-relations-widgets
     * `button_edit` (optional) - set false to hide
     * `button_delete` (optional) - set false to hide
     * `visible` (optional) - closure for hiding or showing panel
-    * `columns` - fields array,
+    * `fields` (optional) - columns array, by default get columns from `fillable` in model
         * `name` - name
         * `label` - for field
         * `closure` - use closure instead of name field,

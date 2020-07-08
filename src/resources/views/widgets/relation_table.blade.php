@@ -22,10 +22,13 @@
     if (!isset($widget['button_delete']) || $widget['button_delete'] !== false) {
         $widget['button_delete'] = true;
     }
-    if(!isset($widget['columns']) && isset($widget['model'])){
-        $model = new $widget['model']();
-        foreach ($model->getFillable() as $propertyName){
-            $widget['columns'][$propertyName] = $crud->makeLabel($propertyName);
+    if(!isset($widget['columns'])){
+        $widget['columns'] = [];
+        foreach ($entry->{$widget['name']}->getFillable() as $propertyName){
+            $widget['columns'][] = [
+                'label' => $crud->makeLabel($propertyName),
+                'name' => $propertyName,
+            ];
         }
     }
     if(!isset($widget['columns']) && !isset($widget['model'])){

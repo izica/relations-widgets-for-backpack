@@ -8,8 +8,12 @@
         }
     }
     if(!isset($widget['fields'])){
+        $widget['fields'] = [];
         foreach ($entry->{$widget['name']}->getFillable() as $propertyName){
-            $widget['fields'][$propertyName] = $crud->makeLabel($propertyName);
+            $widget['fields'][] = [
+                'label' => $crud->makeLabel($propertyName),
+                'name' => $propertyName,
+            ];
         }
     }
 
