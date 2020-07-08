@@ -13,6 +13,6 @@ class RelationViewsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(realpath(__DIR__.'/resources/views'), 'laravel-backpack-relation');
+        $this->loadViewsFrom(realpath(__DIR__.'/resources/views'), 'laravel-backpack-relations');
     }
 }
