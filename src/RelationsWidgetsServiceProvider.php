@@ -1,6 +1,6 @@
 <?php
 
-namespace izica\LaravelBackpackRelationsWidgets;
+namespace izica\RelationsWidgets;
 
 use Illuminate\Support\ServiceProvider;
 

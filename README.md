@@ -7,7 +7,7 @@
 
 ### Installation
 ```
-composer require izica/laravel-backpack-relations-widgets
+composer require izica/relations-widgets-for-backpack
 ```
 
 ### Screenshots
