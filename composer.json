@@ -27,13 +27,13 @@
     },
     "autoload": {
         "psr-4": {
-            "izica\\LaravelBackpackRelationsWidjets\\": "src/"
+            "izica\\LaravelBackpackRelationsWidgets\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "izica\\LaravelBackpackRelationsWidjets\\RelationsWidjetsServiceProvider"
+                "izica\\LaravelBackpackRelationsWidjets\\RelationsWidgetsServiceProvider"
             ]
         }
     }

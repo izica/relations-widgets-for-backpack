@@ -1,4 +1,4 @@
-## Laravel Backpack Relations Widjets
+## Laravel Backpack Relations Widgets
 1. [Installation](#installation)
 2. [Screenshots](#screenshots)
 3. [Features](#features)
@@ -7,7 +7,7 @@
 
 ### Installation
 ```
-composer require izica/laravel-backpack-relations-widjets
+composer require izica/laravel-backpack-relations-widgets
 ```
 
 ### Screenshots
@@ -16,7 +16,7 @@ composer require izica/laravel-backpack-relations-widjets
 ![Alt text](screenshots/relation_table.png?raw=true "relation_table")
 
 ### Features
-* use relations as views at show operation
+* use widgets for showing relations in show operation
 * show or hide panels or fields by conditions
 * build field value by closure
 * use dot orm notation for accessing relation fields

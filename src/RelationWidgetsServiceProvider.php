@@ -1,10 +1,10 @@
 <?php
 
-namespace izica\LaravelBackpackRelationViews;
+namespace izica\LaravelBackpackRelationsWidgets;
 
 use Illuminate\Support\ServiceProvider;
 
-class RelationViewsServiceProvider extends ServiceProvider
+class RelationsWidgetsServiceProvider extends ServiceProvider
 {
     /**
      * Perform post-registration booting of services.
