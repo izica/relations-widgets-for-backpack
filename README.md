@@ -1,4 +1,4 @@
-## Laravel Backpack Relations Views
+## Laravel Backpack Relations Widjets
 1. [Installation](#installation)
 2. [Screenshots](#screenshots)
 3. [Features](#features)
@@ -7,7 +7,7 @@
 
 ### Installation
 ```
-composer require izica/laravel-backpack-relations-views
+composer require izica/laravel-backpack-relations-widjets
 ```
 
 ### Screenshots
