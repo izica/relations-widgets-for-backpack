@@ -54,11 +54,14 @@ composer require izica/relations-widgets-for-backpack
 ### Usage
 
 #### Relation panel
-belongsTo, hasOne
+`belongsTo`, `hasOne`
+
 ```php
+use Backpack\CRUD\app\Library\Widget;
+
 protected function setupShowOperation()
 {
-    $this->data['widgets']['after_content'][] = [
+    Widget::add([
         'type'           => 'relation_panel',
         'name'           => 'account_contact',
         'label'          => 'Account contact info',
@@ -67,7 +70,7 @@ protected function setupShowOperation()
             return $entry->is_public_person;
         },
         'buttons' => false,
-        'fields'        => [
+        'fields'         => [
             [
                 'label' => 'Birthdate',
                 'closure' => function($entry){
@@ -90,17 +93,18 @@ protected function setupShowOperation()
                 }       
             ],
         ],
-    ];
+    ])->to('after_content');
 }
 
 ```
 
 #### Relation table
-hasMany
+`hasMany`
+
 ```php
 protected function setupShowOperation()
 {
-    $this->data['widgets']['after_content'][] = [
+    Widget::add([
         'type'           => 'relation_table',
         'name'           => 'order_cargos',
         'label'          => 'Order cargo list',
@@ -126,7 +130,7 @@ protected function setupShowOperation()
                 }
             ],
         ],
-    ];
+    ])->to('after_content');
 }
 
 ```
