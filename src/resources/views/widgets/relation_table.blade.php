@@ -78,7 +78,7 @@
                             }
                         @endphp
                         <td>
-                            <span>{{$value}}</span>
+                            <span>{!!$value!!}</span>
                         </td>
                     @endforeach
                     @if($widget['buttons'] === true)
