@@ -56,7 +56,7 @@
                                 <strong>{{$field['label'] ?? ''}}:</strong>
                             </td>
                             <td>
-                                <span>{{$value ?? ''}}</span>
+                                <span>{!!$value ?? ''!!}</span>
                             </td>
                         </tr>
                     @endforeach
