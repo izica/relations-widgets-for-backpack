@@ -67,13 +67,13 @@
                             </td>
                             <td>
                                 @if ($widget['button_show'] === true)
-                                    <a href="/admin/{{$widget['backpack_crud']}}/{{$entry->{$widget['name']}->id}}/show"
+                                    <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $entry->{$widget['name']}->id . "/show") }}"
                                        class="btn btn-sm btn-link">
                                         <i class="la la-eye"></i> {{ trans('backpack::crud.preview') }}
                                     </a>
                                 @endif
                                 @if ($widget['button_edit'] === true)
-                                    <a href="/admin/{{$widget['backpack_crud']}}/{{$entry->{$widget['name']}->id}}/edit"
+                                    <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $entry->{$widget['name']}->id . "/edit") }}"
                                        class="btn btn-sm btn-link">
                                         <i class="la la-edit"></i> {{ trans('backpack::crud.edit') }}
                                     </a>
