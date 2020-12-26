@@ -46,7 +46,7 @@
     <div class="d-flex align-items-center mb-2">
         <h5 class="mr-2 mb-0">{{$widget['label']}}</h5>
         @if ($widget['button_add'] === true)
-            <a href="/admin/{{$widget['backpack_crud']}}/create" class="btn btn-primary" data-style="zoom-in">
+            <a href="{{ backpack_url($widget['backpack_crud'] . "/create") }}" class="btn btn-primary" data-style="zoom-in">
                 <span class="ladda-label"><i class="la la-plus"></i> {{ trans('backpack::crud.add') }}</span>
             </a>
         @endif
@@ -84,20 +84,20 @@
                     @if($widget['buttons'] === true)
                         <td>
                             @if ($widget['button_show'] === true)
-                                <a href="/admin/{{$widget['backpack_crud']}}/{{$model->id}}/show"
+                                <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id . "/show") }}"
                                    class="btn btn-sm btn-link">
                                     <i class="la la-eye"></i> {{ trans('backpack::crud.preview') }}
                                 </a>
                             @endif
                             @if ($widget['button_edit'] === true)
-                                <a href="/admin/{{$widget['backpack_crud']}}/{{$model->id}}/edit"
+                                <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id . "/edit") }}"
                                    class="btn btn-sm btn-link">
                                     <i class="la la-edit"></i> {{ trans('backpack::crud.edit') }}
                                 </a>
                             @endif
                             @if ($widget['button_delete'] === true)
                                 <a href="javascript:void(0)" onclick="deleteEntryRelationHasManyWidget(this)"
-                                   data-route="/admin/{{$widget['backpack_crud']}}/{{$model->id}}"
+                                   data-route="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id) }}"
                                    class="btn btn-sm btn-link" data-button-type="delete">
                                     <i class="la la-trash"></i> {{ trans('backpack::crud.delete') }}
                                 </a>
