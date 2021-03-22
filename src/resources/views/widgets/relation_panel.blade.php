@@ -1,15 +1,16 @@
 @php
-    if(!isset($entry) || $entry->{$widget['name']} === null){
+    $entry_relation = data_get($entry, $widget['name']);
+    if(!isset($entry) || $entry_relation === null){
         return;
     }
     if(isset($widget['visible']) && is_callable($widget['visible'])){
-        if(!$widget['visible']($entry->{$widget['name']})){
+        if(!$widget['visible']($entry_relation)){
             return;
         }
     }
     if(!isset($widget['fields'])){
         $widget['fields'] = [];
-        foreach ($entry->{$widget['name']}->getFillable() as $propertyName){
+        foreach ($entry_relation->getFillable() as $propertyName){
             $widget['fields'][] = [
                 'label' => $crud->makeLabel($propertyName),
                 'name' => $propertyName,
@@ -28,6 +29,8 @@
     if (!isset($widget['buttons']) || $widget['buttons'] !== false) {
         $widget['buttons'] = true;
     }
+
+
 @endphp
 
 <div class="row">
@@ -39,16 +42,16 @@
                     @foreach($widget['fields'] as $field)
                         @php
                             if(isset($field['visible']) && is_callable($field['visible'])){
-                                if(!$field['visible']($entry->{$widget['name']}->{$widget['name']})){
+                                if(!$field['visible']($entry_relation)){
                                     continue;
                                 }
                             }
                             $value = '';
                             if(isset($field['closure'])){
-                                $value = $field['closure']($entry->{$widget['name']});
+                                $value = $field['closure']($entry_relation);
                             }
                             if(isset($field['name'])){
-                                 $value = data_get($entry->{$widget['name']}, $field['name']);
+                                 $value = data_get($entry_relation, $field['name']);
                             }
                         @endphp
                         <tr>
@@ -67,13 +70,13 @@
                             </td>
                             <td>
                                 @if ($widget['button_show'] === true)
-                                    <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $entry->{$widget['name']}->id . "/show") }}"
+                                    <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $entry_relation->id . "/show") }}"
                                        class="btn btn-sm btn-link">
                                         <i class="la la-eye"></i> {{ trans('backpack::crud.preview') }}
                                     </a>
                                 @endif
                                 @if ($widget['button_edit'] === true)
-                                    <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $entry->{$widget['name']}->id . "/edit") }}"
+                                    <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $entry_relation->id . "/edit") }}"
                                        class="btn btn-sm btn-link">
                                         <i class="la la-edit"></i> {{ trans('backpack::crud.edit') }}
                                     </a>
