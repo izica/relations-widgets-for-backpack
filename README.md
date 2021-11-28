@@ -11,6 +11,8 @@
 * relation_table create button with relation attribute reference
 * relation_table pagination
 
+![Alt text](screenshots/relation_table_with_options.png?raw=true "relation_table_with_options")
+
 ### Installation
 ```
 composer require izica/relations-widgets-for-backpack
