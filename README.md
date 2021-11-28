@@ -4,6 +4,12 @@
 3. [Features](#features)
 4. [Documentation](#documentation)
 5. [Usage](#usage)
+5. [How to enable creating related model](#how-to-enable-creating-related-model)
+
+### 3.0 Whats new:
+* relation_table search input
+* relation_table create button with relation attribute reference
+* relation_table pagination
 
 ### Installation
 ```
@@ -37,11 +43,14 @@ composer require izica/relations-widgets-for-backpack
         * `visible`(optional) - closure for hiding or showing panel
         
 * relation_table
-    * `name` - name of relation
+    * `name` - (required) name of relation
     * `label` - panel label
+    * `relation_attribute` - (optional) used for passing url parameter for button_create
+    * `search` - (optional) `closure`, enables search input
+    * `per_page` - (optional) enables pagination, `null` by default
     * `backpack_crud` - backpack crud url,
     * `buttons` (optional) - set false to hide all action buttons
-    * `button_add` (optional) - set false to hide
+    * `button_create` (optional) - set false to hide
     * `button_show` (optional) - set false to hide
     * `button_edit` (optional) - set false to hide
     * `button_delete` (optional) - set false to hide
@@ -112,7 +121,11 @@ protected function setupShowOperation()
         'visible' => function($entry){
             return $entry->order_cargos->count() > 0;
         },
-        'button_add' => false,
+        'search' => function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+        },
+        'relation_attribute' => 'order_id',
+        'button_create' => false,
         'button_delete' => false,
         'columns' => [
             [
@@ -133,4 +146,18 @@ protected function setupShowOperation()
     ])->to('after_content');
 }
 
+```
+
+### How to enable creating related model
+You need to set:
+* `button_create` => `true`
+* `relation_attribute` => `attribute_name`
+
+Next you need to add to relation/select field `default` value:
+```php
+    CRUD::addField([
+        'type' => "relationship",
+        'name' => 'order',
+        'default' => $_GET['order_id'] ?? null
+    ]);
 ```
