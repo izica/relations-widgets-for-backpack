@@ -57,7 +57,7 @@
         <thead>
             <tr role="row">
                 @foreach($widget['columns'] as $column)
-                    <th>{{$column['label']}}</th>
+                    <th>{{$column['label'] ?? \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade::makeLabel($column['name']) ?? '--' }}</th>
                 @endforeach
                 @if($widget['buttons'] === true)
                     <th>{{ trans('backpack::crud.actions') }}</th>
@@ -110,7 +110,7 @@
         <tfoot>
             <tr>
                 @foreach($widget['columns'] as $column)
-                    <th>{{$column['label']}}</th>
+                    <th>{{$column['label']  ?? \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade::makeLabel($column['name']) ?? '--' }}</th>
                 @endforeach
                 @if($widget['buttons'] === true)
                     <th rowspan="1" colspan="1">{{ trans('backpack::crud.actions') }}</th>
