@@ -10,8 +10,8 @@
     if (!isset($widget['buttons']) || $widget['buttons'] !== false) {
         $widget['buttons'] = true;
     }
-    if (!isset($widget['button_add']) || $widget['button_add'] !== false) {
-        $widget['button_add'] = true;
+    if (!isset($widget['button_create']) || $widget['button_create'] !== false) {
+        $widget['button_create'] = true;
     }
      if (!isset($widget['button_show']) || $widget['button_show'] !== false) {
         $widget['button_show'] = true;
@@ -41,12 +41,21 @@
     if(!isset($widget['columns']) && !isset($widget['model'])){
         $widget['columns'] = [];
     }
+
+    $createUrl = backpack_url($widget['backpack_crud'] . "/create");
+    if (isset($widget['relation_column'])) {
+        $createUrl .= "?{$widget['relation_column']}={$entry->id}";
+    }
 @endphp
 <div>
     <div class="d-flex align-items-center mb-2">
         <h5 class="mr-2 mb-0">{{$widget['label']}}</h5>
-        @if ($widget['button_add'] === true)
-            <a href="{{ backpack_url($widget['backpack_crud'] . "/create") }}" class="btn btn-primary" data-style="zoom-in">
+        @if ($widget['button_create'] === true)
+            <a
+                    href="{{ $createUrl }}"
+                    class="btn btn-primary"
+                    data-style="zoom-in"
+            >
                 <span class="ladda-label"><i class="la la-plus"></i> {{ trans('backpack::crud.add') }}</span>
             </a>
         @endif
@@ -55,67 +64,67 @@
            cellspacing="0" aria-describedby="crudTable_info" role="grid"
     >
         <thead>
-            <tr role="row">
-                @foreach($widget['columns'] as $column)
-                    <th>{{$column['label'] ?? \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade::makeLabel($column['name']) ?? '--' }}</th>
-                @endforeach
-                @if($widget['buttons'] === true)
-                    <th>{{ trans('backpack::crud.actions') }}</th>
-                @endif
-            </tr>
+        <tr role="row">
+            @foreach($widget['columns'] as $column)
+                <th>{{$column['label']}}</th>
+            @endforeach
+            @if($widget['buttons'] === true)
+                <th>{{ trans('backpack::crud.actions') }}</th>
+            @endif
+        </tr>
         </thead>
         <tbody>
-            @foreach($entry->{$widget['name']} as $model)
-                <tr role="row">
-                    @foreach($widget['columns'] as $column)
-                        @php
-                            $value = '';
-                            if(isset($column['closure'])){
-                                $value = $column['closure']($model);
-                            }
-                            if(isset($column['name'])){
-                                 $value = data_get($model, $column['name']);
-                            }
-                        @endphp
-                        <td>
-                            <span>{!!$value!!}</span>
-                        </td>
-                    @endforeach
-                    @if($widget['buttons'] === true)
-                        <td>
-                            @if ($widget['button_show'] === true)
-                                <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id . "/show") }}"
-                                   class="btn btn-sm btn-link">
-                                    <i class="la la-eye"></i> {{ trans('backpack::crud.preview') }}
-                                </a>
-                            @endif
-                            @if ($widget['button_edit'] === true)
-                                <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id . "/edit") }}"
-                                   class="btn btn-sm btn-link">
-                                    <i class="la la-edit"></i> {{ trans('backpack::crud.edit') }}
-                                </a>
-                            @endif
-                            @if ($widget['button_delete'] === true)
-                                <a href="javascript:void(0)" onclick="deleteEntryRelationHasManyWidget(this)"
-                                   data-route="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id) }}"
-                                   class="btn btn-sm btn-link" data-button-type="delete">
-                                    <i class="la la-trash"></i> {{ trans('backpack::crud.delete') }}
-                                </a>
-                            @endif
-                        </td>
-                    @endif
-                </tr>
-            @endforeach
-        </tbody>
-        <tfoot>
-            <tr>
+        @foreach($entry->{$widget['name']} as $model)
+            <tr role="row">
                 @foreach($widget['columns'] as $column)
-                    <th>{{$column['label']  ?? \Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade::makeLabel($column['name']) ?? '--' }}</th>
+                    @php
+                        $value = '';
+                        if(isset($column['closure'])){
+                            $value = $column['closure']($model);
+                        }
+                        if(isset($column['name'])){
+                             $value = data_get($model, $column['name']);
+                        }
+                    @endphp
+                    <td>
+                        <span>{!!$value!!}</span>
+                    </td>
                 @endforeach
                 @if($widget['buttons'] === true)
-                    <th rowspan="1" colspan="1">{{ trans('backpack::crud.actions') }}</th>
+                    <td>
+                        @if ($widget['button_show'] === true)
+                            <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id . "/show") }}"
+                               class="btn btn-sm btn-link">
+                                <i class="la la-eye"></i> {{ trans('backpack::crud.preview') }}
+                            </a>
+                        @endif
+                        @if ($widget['button_edit'] === true)
+                            <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id . "/edit") }}"
+                               class="btn btn-sm btn-link">
+                                <i class="la la-edit"></i> {{ trans('backpack::crud.edit') }}
+                            </a>
+                        @endif
+                        @if ($widget['button_delete'] === true)
+                            <a href="javascript:void(0)" onclick="deleteEntryRelationHasManyWidget(this)"
+                               data-route="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id) }}"
+                               class="btn btn-sm btn-link" data-button-type="delete">
+                                <i class="la la-trash"></i> {{ trans('backpack::crud.delete') }}
+                            </a>
+                        @endif
+                    </td>
                 @endif
             </tr>
+        @endforeach
+        </tbody>
+        <tfoot>
+        <tr>
+            @foreach($widget['columns'] as $column)
+                <th>{{$column['label']}}</th>
+            @endforeach
+            @if($widget['buttons'] === true)
+                <th rowspan="1" colspan="1">{{ trans('backpack::crud.actions') }}</th>
+            @endif
+        </tr>
         </tfoot>
     </table>
 </div>
