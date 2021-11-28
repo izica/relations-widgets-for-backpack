@@ -7,6 +7,10 @@
             return;
         }
     }
+
+    $searchName = "{$widget['name']}-search";
+    $widgetId = "relation-table-{$widget['name']}";
+
     if (!isset($widget['buttons']) || $widget['buttons'] !== false) {
         $widget['buttons'] = true;
     }
@@ -26,11 +30,11 @@
         $widget['columns'] = [];
 
         try {
-            $model = get_class($entry->{$widget['name']}()->getRelated());
-            $model = new $model();
+            $item = get_class($entry->{$widget['name']}()->getRelated());
+            $item = new $item();
 
             $widget['columns'] = [];
-            foreach ($model->getFillable() as $property){
+            foreach ($item->getFillable() as $property){
                 $widget['columns'][] = [
                     'label' => $crud->makeLabel($property),
                     'name'  => $property,
@@ -46,22 +50,57 @@
     if (isset($widget['relation_column'])) {
         $createUrl .= "?{$widget['relation_column']}={$entry->id}";
     }
+
+    if (!isset($widget['search']) || !is_callable($widget['search'])) {
+        $widget['search'] = false;
+    }
+
+    $query = $entry->{$widget['name']}();
+    if(is_callable($widget['search']) && isset($_GET[$searchName])){
+        $query = $widget['search']($query, $_GET[$searchName]);
+    }
+    $items = $query->get();
 @endphp
-<div>
-    <div class="d-flex align-items-center mb-2">
-        <h5 class="mr-2 mb-0">{{$widget['label']}}</h5>
-        @if ($widget['button_create'] === true)
-            <a
-                    href="{{ $createUrl }}"
-                    class="btn btn-primary"
-                    data-style="zoom-in"
+<div id="{{$widgetId}}">
+    <div class="row mb-0">
+        <div class="col-sm-6">
+            <div class="d-flex align-items-center mb-2">
+                <h5 class="mr-2 mb-0">{{$widget['label']}}</h5>
+                @if ($widget['button_create'] === true)
+                    <a
+                            href="{{ $createUrl }}"
+                            class="btn btn-primary"
+                            data-style="zoom-in"
+                    >
+                        <span class="ladda-label"><i class="la la-plus"></i> {{ trans('backpack::crud.add') }}</span>
+                    </a>
+                @endif
+            </div>
+        </div>
+        @if ($widget['search'] !== false)
+            <form
+                    class="offset-3 col-sm-3"
+                    onsubmit="
+                            location.hash = 'hack';
+                            location.hash = '';
+                            location.href=this.action + '{{$widgetId}}';
+                            return true;
+                            "
             >
-                <span class="ladda-label"><i class="la la-plus"></i> {{ trans('backpack::crud.add') }}</span>
-            </a>
+                <input
+                        type="search"
+                        name="{{$searchName}}"
+                        class="form-control"
+                        placeholder="{{ trans('backpack::crud.search') }}"
+                        value="{{$_GET[$searchName] ?? ''}}"
+                />
+            </form>
         @endif
     </div>
-    <table class="bg-white table table-striped table-hover nowrap rounded shadow-xs border-xs dataTable dtr-inline"
-           cellspacing="0" aria-describedby="crudTable_info" role="grid"
+    <table
+            class="bg-white table table-striped table-hover nowrap rounded shadow-xs border-xs dataTable dtr-inline"
+            cellspacing="0"
+            aria-describedby="crudTable_info" role="grid"
     >
         <thead>
         <tr role="row">
@@ -74,16 +113,16 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($entry->{$widget['name']} as $model)
+        @foreach($items as $item)
             <tr role="row">
                 @foreach($widget['columns'] as $column)
                     @php
                         $value = '';
                         if(isset($column['closure'])){
-                            $value = $column['closure']($model);
+                            $value = $column['closure']($item);
                         }
                         if(isset($column['name'])){
-                             $value = data_get($model, $column['name']);
+                             $value = data_get($item, $column['name']);
                         }
                     @endphp
                     <td>
@@ -93,20 +132,20 @@
                 @if($widget['buttons'] === true)
                     <td>
                         @if ($widget['button_show'] === true)
-                            <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id . "/show") }}"
+                            <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $item->id . "/show") }}"
                                class="btn btn-sm btn-link">
                                 <i class="la la-eye"></i> {{ trans('backpack::crud.preview') }}
                             </a>
                         @endif
                         @if ($widget['button_edit'] === true)
-                            <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id . "/edit") }}"
+                            <a href="{{ backpack_url($widget['backpack_crud'] . "/" . $item->id . "/edit") }}"
                                class="btn btn-sm btn-link">
                                 <i class="la la-edit"></i> {{ trans('backpack::crud.edit') }}
                             </a>
                         @endif
                         @if ($widget['button_delete'] === true)
                             <a href="javascript:void(0)" onclick="deleteEntryRelationHasManyWidget(this)"
-                               data-route="{{ backpack_url($widget['backpack_crud'] . "/" . $model->id) }}"
+                               data-route="{{ backpack_url($widget['backpack_crud'] . "/" . $item->id) }}"
                                class="btn btn-sm btn-link" data-button-type="delete">
                                 <i class="la la-trash"></i> {{ trans('backpack::crud.delete') }}
                             </a>
