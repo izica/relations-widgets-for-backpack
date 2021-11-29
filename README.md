@@ -34,9 +34,9 @@ composer require izica/relations-widgets-for-backpack
     * `name` - name of relation
     * `label` - panel label
     * `backpack_crud` - backpack crud url,
-    * `buttons` (optional) - set false to hide all action buttons
-    * `button_show` (optional) - set false to hide
-    * `button_edit` (optional) - set false to hide
+    * `buttons` (optional) - set `false` to hide all action buttons
+    * `button_show` (optional) - set `false` to hide
+    * `button_edit` (optional) - set `false` to hide
     * `visible` (optional) - closure for hiding or showing panel
     * `fields` (optional) - fields array, by default get columns from `fillable` in model
         * `name` - name
@@ -47,17 +47,17 @@ composer require izica/relations-widgets-for-backpack
 * relation_table
     * `name` - (required) name of relation
     * `label` - panel label
-    * `relation_attribute` - (optional) used for passing url parameter for button_create
+    * `relation_attribute` - (optional) used for passing url parameter name for button_create
     * `search` - (optional) `closure`, enables search input
     * `per_page` - (optional) enables pagination, `null` by default
     * `backpack_crud` - backpack crud url,
-    * `buttons` (optional) - set false to hide all action buttons
-    * `button_create` (optional) - set false to hide
-    * `button_show` (optional) - set false to hide
-    * `button_edit` (optional) - set false to hide
-    * `button_delete` (optional) - set false to hide
-    * `visible` (optional) - closure for hiding or showing panel
-    * `fields` (optional) - columns array, by default get columns from `fillable` in model
+    * `buttons` (optional) - set `false` to hide all action buttons
+    * `button_create` (optional) - set `false` to hide
+    * `button_show` (optional) - set `false` to hide
+    * `button_edit` (optional) - set `false` to hide
+    * `button_delete` (optional) - set `false` to hide
+    * `visible` (optional) - `closure` for hiding or showing panel
+    * `fields` (optional) - columns `array`, by default get columns from `fillable` in model
         * `name` - name
         * `label` - for field
         * `closure` - use closure instead of name field,
@@ -127,7 +127,7 @@ protected function setupShowOperation()
             return $query->where('name', 'like', "%{$search}%");
         },
         'relation_attribute' => 'order_id',
-        'button_create' => false,
+        'button_create' => true,
         'button_delete' => false,
         'columns' => [
             [
