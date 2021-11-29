@@ -60,7 +60,7 @@ composer require izica/relations-widgets-for-backpack
     * `fields` (optional) - columns `array`, by default get columns from `fillable` in model
         * `name` - name
         * `label` - for field
-        * `closure` - use closure instead of name field,
+        * `closure` - use `closure` instead of name field for passing value,
         
 ### Usage
 
