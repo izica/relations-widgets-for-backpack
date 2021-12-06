@@ -1,4 +1,4 @@
-## Laravel Backpack Relations Widgets
+sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder## Laravel Backpack Relations Widgets
 1. [Installation](#installation)
 2. [Screenshots](#screenshots)
 3. [Features](#features)
@@ -57,7 +57,7 @@ composer require izica/relations-widgets-for-backpack
     * `button_edit` (optional) - set `false` to hide
     * `button_delete` (optional) - set `false` to hide
     * `visible` (optional) - `closure` for hiding or showing panel
-    * `fields` (optional) - columns `array`, by default get columns from `fillable` in model
+    * `columns` (optional) - columns `array`, by default get columns from `fillable` in model
         * `name` - name
         * `label` - for field
         * `closure` - use `closure` instead of name field for passing value,

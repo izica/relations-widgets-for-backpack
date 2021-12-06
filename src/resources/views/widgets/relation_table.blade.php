@@ -8,7 +8,8 @@
         }
     }
 
-    $searchName = "{$widget['name']}-search";
+    $searchName = "{$widget['name']}_search";
+    $paginationName = "{$widget['name']}_page";
     $widgetId = "relation-table-{$widget['name']}";
 
     if (!isset($widget['buttons']) || $widget['buttons'] !== false) {
@@ -25,6 +26,12 @@
     }
     if (!isset($widget['button_delete']) || $widget['button_delete'] !== false) {
         $widget['button_delete'] = true;
+    }
+    if (!isset($widget['search']) || !is_callable($widget['search'])) {
+        $widget['search'] = false;
+    }
+    if (!isset($widget['per_page'])) {
+        $widget['per_page'] = null;
     }
     if(!isset($widget['columns'])){
         $widget['columns'] = [];
@@ -47,21 +54,21 @@
     }
 
     $createUrl = backpack_url($widget['backpack_crud'] . "/create");
-    if (isset($widget['relation_column'])) {
-        $createUrl .= "?{$widget['relation_column']}={$entry->id}";
-    }
-
-    if (!isset($widget['search']) || !is_callable($widget['search'])) {
-        $widget['search'] = false;
+    if (isset($widget['relation_attribute'])) {
+        $createUrl .= "?{$widget['relation_attribute']}={$entry->id}";
     }
 
     $query = $entry->{$widget['name']}();
     if(is_callable($widget['search']) && isset($_GET[$searchName])){
         $query = $widget['search']($query, $_GET[$searchName]);
     }
-    $items = $query->get();
+    if($widget['per_page']) {
+        $items = $query->paginate($widget['per_page'], ['*'], $paginationName)->fragment($widgetId);
+    } else {
+        $items = $query->get();
+    }
 @endphp
-<div id="{{$widgetId}}">
+<div id="{{$widgetId}}" class="dataTables_wrapper">
     <div class="row mb-0">
         <div class="col-sm-6">
             <div class="d-flex align-items-center mb-2">
@@ -166,6 +173,9 @@
         </tr>
         </tfoot>
     </table>
+    @if ($widget['per_page'])
+        {{$items->links('backpack::rwfb-pagination')}}
+    @endif
 </div>
 
 @push('after_scripts') @if (request()->ajax()) @endpush @endif
