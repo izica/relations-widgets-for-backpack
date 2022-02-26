@@ -1,4 +1,4 @@
-sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder## Laravel Backpack Relations Widgets
+## Laravel Backpack Relations Widgets
 1. [Installation](#installation)
 2. [Screenshots](#screenshots)
 3. [Features](#features)
