@@ -53,6 +53,9 @@
                         if(isset($field['name'])){
                              $value = data_get($entry_relation, $field['name']);
                         }
+                        if (is_array($value) || is_object($value)) {
+                          $value = json_encode($value);
+                        }
                     @endphp
                     <tr>
                         <td>
