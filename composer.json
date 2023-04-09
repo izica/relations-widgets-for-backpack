@@ -2,13 +2,6 @@
     "name": "izica/relations-widgets-for-backpack",
     "description": "Widgets for preview model relations in laravel backpack",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Artyom Golovarchuk",
-            "email": "artemiztomska@gmail.com",
-            "homepage": "https://github.com/izica/relations-widgets-for-backpack"
-        }
-    ],
     "homepage": "https://github.com/izica/relations-widgets-for-backpack",
     "keywords": [
         "Laravel",
